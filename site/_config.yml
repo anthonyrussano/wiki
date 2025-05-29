@@ -5,8 +5,8 @@ keywords:
 author: CHOP
 language: en
 timezone: ''
-url: https://localhost/pages/analytics/wiki
-root: /pages/analytics/wiki
+url: https://anthonyrussano.github.io/wiki/
+root: /wiki
 permalink: :post_title/
 permalink_defaults:
 pretty_urls:
