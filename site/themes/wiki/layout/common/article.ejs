@@ -36,11 +36,9 @@
                     </h1>
                     <div style="position: relative; margin: auto;">
                         <% if(page.image) { %>
-                            <img src="<%= site.data.resources.server_link %>raw/<%= site.data.resources.user %>/<%= site.data.resources.repo %>/main/img/<%- page.image %>"
-                                style="width: 200px; border-radius: 25px; border-width: 2px;border-style:inset;">
+                            <img src="<%= site.data.resources.img_url %><%- page.image %>" style="width: 200px; border-radius: 25px; border-width: 2px;border-style:inset;">
                             <% } else { %>
-                                <img src="<%= site.data.resources.server_link %>raw/<%= site.data.resources.user %>/<%= site.data.resources.repo %>/main/img/<%- page.title %>"
-                                    style="width: 200px; border-radius: 25px;border-width: 2px;border-style:inset;">
+                                <img src="<%= site.data.resources.img_url %><%- page.title %>" style="width: 200px; border-radius: 25px;border-width: 2px;border-style:inset;">
                                 <% } %>
                                     <div style="text-align:justify;">
                                         <% if (page.tags && page.tags.length) { %>
