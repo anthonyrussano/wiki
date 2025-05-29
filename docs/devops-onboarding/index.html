@@ -7,11 +7,11 @@
 
     <link href="https://github.com/raw/anthonyrussano/wiki/main/img/dark_folder.png" rel="icon">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
-    <script src="libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../libs/font-awesome/css/font-awesome.min.css">
 
 </head>
 
@@ -28,6 +28,7 @@
                         </a>
                     </h3>
                     
+                        <a href="../index.html">↶ Return</a>
                         
                     <script type="text/javascript">
 
@@ -125,15 +126,15 @@
                     <br>
                     <input id="local-search-input" type="search" class="ins-search-input" placeholder="Search articles..." />
                     <div id="local-search-result"></div>
-                    <div id='tags' style="display: none; text-align:justify;"><a href="tags/powershell/" style="font-size: 42px;">Powershell</a> <a href="tags/template/" style="font-size: 22px;">Template</a> <a href="tags/tutorial/" style="font-size: 42px;">Tutorial</a> <a href="tags/windows/" style="font-size: 42px;">Windows</a></div>
+                    <div id='tags' style="display: none; text-align:justify;"><a href="../tags/powershell/" style="font-size: 42px;">Powershell</a> <a href="../tags/template/" style="font-size: 22px;">Template</a> <a href="../tags/tutorial/" style="font-size: 42px;">Tutorial</a> <a href="../tags/windows/" style="font-size: 42px;">Windows</a></div>
                     <!-- placeholder for recent posts section --> 
                     <div style="display: none;" id='categories'>
                         
                         
                          <ul class="unstyled" id="tree" > 
-                                    <li class="directory">
+                                    <li class="directory open">
                                         <a href="#" data-role="directory">
-                                            <i class="fa fa-folder"></i>
+                                            <i class="fa fa-folder-open"></i>
                                             &nbsp;
                                             DevOps
                                         </a>
@@ -151,11 +152,11 @@
                                             &nbsp;
                                             aws-cli
                                         </a>
-                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="working-with-aws-lambda/">Working With AWS Lambda</a></li>  </ul> 
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="../working-with-aws-lambda/">Working With AWS Lambda</a></li>  </ul> 
                                     </li> 
-                                     <li class="file"><a href="how-to-install-chocolatey-on-windows/">How to install Chocolatey on Windows</a></li>  </ul> 
+                                     <li class="file"><a href="../how-to-install-chocolatey-on-windows/">How to install Chocolatey on Windows</a></li>  </ul> 
                                     </li> 
-                                     <li class="file"><a href="devops-onboarding/">DevOps OnBoarding</a></li>  </ul> 
+                                     <li class="file active"><a href="">DevOps OnBoarding</a></li>  </ul> 
                                     </li> 
                                      </ul> 
                     </div>
@@ -224,7 +225,79 @@
                         });
                     </script>
                 </div>
+                <article id="post-DevOps/devops-onboarding" class="article article-type-post" itemscope
+    itemprop="blogPost">
+    <div class="article-inner">
+        <header class="article-header">
+            <div class="article-meta">
                 
+<div>
+    <a class="category-link" href="../categories/devops/">DevOps</a>
+</div>
+
+            </div>
+            
+                <div class="article-meta-button">
+                    <a
+                        target="_blank" rel="noopener" href="https://github.com/anthonyrussano/wiki/edit/main/site/source/_posts/template">
+                        New </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        target="_blank" rel="noopener" href='https://github.com/anthonyrussano/wiki/edit/main/site/source/_posts/DevOps/devops-onboarding.md'>
+                        Edit </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        target="_blank" rel="noopener" href='https://github.com/anthonyrussano/wiki/commits/main/site/source/_posts/DevOps/devops-onboarding.md'>
+                        History </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        target="_blank" rel="noopener" href='https://github.com/anthonyrussano/wiki/raw/main/site/source/_posts/DevOps/devops-onboarding.md'>
+                        Source </a>
+                </div>
+                
+                    <h1 class="article-title">
+                        <span style="cursor: pointer;" onclick="myFunction3()">
+                            DevOps OnBoarding
+                        </span>
+                    </h1>
+                    <div style="position: relative; margin: auto;">
+                        
+                            <img src="https://github.com/raw/anthonyrussano/wiki/main/img/scratch.png"
+                                style="width: 200px; border-radius: 25px; border-width: 2px;border-style:inset;">
+                            
+                                    <div style="text-align:justify;">
+                                        
+                                            <br><b>Keywords</b><br><br> <a class="tag-link-link" href="../tags/template/" rel="tag">Template</a>
+                                                
+                                                    <br><br><b>Outline</b>
+                                    </div>
+                                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Pre-Boarding-Logistics"><span class="toc-number">1.</span> <span class="toc-text">1. Pre-Boarding Logistics</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sources"><span class="toc-number"></span> <span class="toc-text">Sources</span></a>
+
+                    </div>
+        </header>
+        <div style="text-align:justify;" class="article-entry" itemprop="articleBody">
+            <h3 id="1-Pre-Boarding-Logistics">1. Pre-Boarding Logistics</h3>
+<ul>
+<li><strong>Hardware &amp; accounts</strong> – laptop, 2FA setup, VPN setup, pager/on-call phone.</li>
+<li><strong>HR &amp; mandatory training</strong> – HIPAA/security awareness, hospital policies.</li>
+<li><strong>Software licenses</strong> – IDE, paid SaaS tooling, AWS/Azure credits if applicable.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></li>
+</ul>
+<hr>
+<h2 id="Sources">Sources</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://github.com/asciinema/asciinema-player#self-hosting-quick-start">https://github.com/asciinema/asciinema-player#self-hosting-quick-start</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        </div>
+    </div>
+</article>
                 <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
@@ -236,9 +309,9 @@
         </div>
         <script type="text/javascript">
 
-  var search_path = "search.xml";
+  var search_path = "../search.xml";
 
-  var path = "search.xml";
+  var path = "../search.xml";
 
   searchFunc(path, 'local-search-input', 'local-search-result');
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>DevOps OnBoarding</title>
+      <link href="/pages/analytics/wiki/devops-onboarding/"/>
+      <url>/pages/analytics/wiki/devops-onboarding/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-Pre-Boarding-Logistics">1. Pre-Boarding Logistics</h3><ul><li><strong>Hardware &amp; accounts</strong> – laptop, 2FA setup, VPN setup, pager/on-call phone.</li><li><strong>HR &amp; mandatory training</strong> – HIPAA/security awareness, hospital policies.</li><li><strong>Software licenses</strong> – IDE, paid SaaS tooling, AWS/Azure credits if applicable.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></li></ul><hr><h2 id="Sources">Sources</h2><hr class="footnotes-sep"><section class="footnotes"><ol class="footnotes-list"><li id="fn1" class="footnote-item"><p><a href="https://github.com/asciinema/asciinema-player#self-hosting-quick-start">https://github.com/asciinema/asciinema-player#self-hosting-quick-start</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p></li></ol></section>]]></content>
+      
+      
+      <categories>
+          
+          <category> DevOps </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Template </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>How to install Chocolatey on Windows</title>
+      <link href="/pages/analytics/wiki/how-to-install-chocolatey-on-windows/"/>
+      <url>/pages/analytics/wiki/how-to-install-chocolatey-on-windows/</url>
+      
+        <content type="html"><![CDATA[<p>Here’s how to install Chocolatey on Windows:</p><ol><li><p>Open PowerShell as Administrator</p></li><li><p>Run this command:</p></li></ol><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> Bypass <span class="literal">-Scope</span> <span class="keyword">Process</span> <span class="literal">-Force</span>; [<span class="type">System.Net.ServicePointManager</span>]::SecurityProtocol = [<span class="type">System.Net.ServicePointManager</span>]::SecurityProtocol <span class="operator">-bor</span> <span class="number">3072</span>; <span class="built_in">iex</span> ((<span class="built_in">New-Object</span> System.Net.WebClient).DownloadString(<span class="string">&#x27;https://community.chocolatey.org/install.ps1&#x27;</span>))</span><br></pre></td></tr></table></figure><ol start="3"><li>Verify installation by running:</li></ol><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco <span class="literal">--version</span></span><br></pre></td></tr></table></figure><p>You can now install packages using <code>choco install &lt;package-name&gt;</code>. Need elevation (admin rights) for installations.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> DevOps </category>
+          
+          <category> Tools </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Tutorial </tag>
+            
+            <tag> Windows </tag>
+            
+            <tag> Powershell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Working With AWS Lambda</title>
+      <link href="/pages/analytics/wiki/working-with-aws-lambda/"/>
+      <url>/pages/analytics/wiki/working-with-aws-lambda/</url>
+      
+        <content type="html"><![CDATA[<p>Here are PowerShell AWS Lambda CLI commands:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># List functions</span></span><br><span class="line">aws lambda list<span class="literal">-functions</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get function details</span></span><br><span class="line">aws lambda <span class="built_in">get-function</span> <span class="literal">--function-name</span> FunctionName</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create function</span></span><br><span class="line">aws lambda create<span class="literal">-function</span> `</span><br><span class="line">  <span class="literal">--function-name</span> FunctionName `</span><br><span class="line">  <span class="literal">--runtime</span> python3.<span class="number">9</span> `</span><br><span class="line">  <span class="literal">--role</span> RoleARN `</span><br><span class="line">  <span class="literal">--handler</span> file.handler `</span><br><span class="line">  <span class="literal">--zip-file</span> fileb://function.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update code</span></span><br><span class="line">aws lambda <span class="built_in">update-function</span><span class="literal">-code</span> `</span><br><span class="line">  <span class="literal">--function-name</span> FunctionName `</span><br><span class="line">  <span class="literal">--zip-file</span> fileb://function.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># Invoke function</span></span><br><span class="line">aws lambda invoke `</span><br><span class="line">  <span class="literal">--function-name</span> FunctionName `</span><br><span class="line">  <span class="literal">--payload</span> <span class="string">&#x27;&#123;&quot;key&quot;:&quot;value&quot;&#125;&#x27;</span> `</span><br><span class="line">  output.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Delete function</span></span><br><span class="line">aws lambda delete<span class="literal">-function</span> <span class="literal">--function-name</span> FunctionName</span><br></pre></td></tr></table></figure><p>Get a list of Lambda Names</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws lambda list<span class="literal">-functions</span> <span class="literal">--query</span> <span class="string">&#x27;Functions[*].FunctionName&#x27;</span></span><br></pre></td></tr></table></figure><p>Check last execution times of functions:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws lambda list<span class="literal">-functions</span> <span class="literal">--query</span> <span class="string">&#x27;Functions[*].[FunctionName,LastModified]&#x27;</span> <span class="literal">--output</span> table</span><br></pre></td></tr></table></figure><p>Or for more details including last execution:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws lambda list<span class="literal">-functions</span> <span class="literal">--query</span> <span class="string">&#x27;Functions[*].[FunctionName,LastModified,LastUpdateStatus]&#x27;</span> <span class="literal">--output</span> table</span><br></pre></td></tr></table></figure><p>Get the Function Code</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get function code and configuration</span></span><br><span class="line">aws lambda <span class="built_in">get-function</span> <span class="literal">--function-name</span> FunctionName</span><br><span class="line"></span><br><span class="line"><span class="comment"># See just the function code</span></span><br><span class="line">aws lambda <span class="built_in">get-function</span> <span class="literal">--function-name</span> FunctionName <span class="literal">--query</span> <span class="string">&#x27;Code.Location&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the function code</span></span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> (aws lambda <span class="built_in">get-function</span> <span class="literal">--function-name</span> FunctionName <span class="literal">--query</span> <span class="string">&#x27;Code.Location&#x27;</span> <span class="literal">--output</span> text) <span class="literal">-OutFile</span> function.zip</span><br></pre></td></tr></table></figure><p>After downloading, you can unzip to see the actual code.</p><p>How to invoke a lambda function:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Test with sample payload</span></span><br><span class="line">aws lambda invoke <span class="literal">--function-name</span> FunctionName <span class="literal">--payload</span> <span class="string">&#x27;&#123;&quot;key&quot;:&quot;value&quot;&#125;&#x27;</span> output.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Test without payload</span></span><br><span class="line">aws lambda invoke <span class="literal">--function-name</span> FunctionName output.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># View output</span></span><br><span class="line"><span class="built_in">Get-Content</span> output.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Test with specific event payload from file</span></span><br><span class="line">aws lambda invoke <span class="literal">--function-name</span> FunctionName <span class="literal">--payload</span> file://event.json output.txt</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> DevOps </category>
+          
+          <category> Tools </category>
+          
+          <category> aws-cli </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Tutorial </tag>
+            
+            <tag> Windows </tag>
+            
+            <tag> Powershell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
