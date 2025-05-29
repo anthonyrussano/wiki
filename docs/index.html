@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>wiki</title>
+
+    <link href="https://github.research.chop.edu/raw/analytics/wiki/main/img/dark_folder.png" rel="icon">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <div id="container">
+        <div class="outer">
+            <section id="main">    
+                <div class="widget-wrap">
+                    <h3 class="widget-title">   
+                        &nbsp;
+                        <span><i class="fa fa-search"></i></span>
+                        <span style="cursor: pointer;" onclick="myFunction1()">Index</span> <span style="cursor: pointer;" onclick="myFunction2()">Keywords</span> <a style="display: none;" id='allExpand' href="#">
+                            <i class="fa fa-angle-double-down fa-2x"></i>
+                        </a>
+                    </h3>
+                    
+                        
+                    <script type="text/javascript">
+
+  var searchFunc = function (path, search_id, content_id) {
+    'use strict';
+    var $input = document.getElementById(search_id);
+    var $resultContent = document.getElementById(content_id);
+    $resultContent.innerHTML = "<ul><span class='local-search-empty'>Loading Search Index...<span></ul>";
+    $.ajax({
+      // 0x01. load xml file
+      url: path,
+      dataType: "xml",
+      success: function (xmlResponse) {
+        // 0x02. parse xml file
+        var datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text()
+          };
+        }).get();
+        $resultContent.innerHTML = "";
+
+        $input.addEventListener('input', function () {
+          // 0x03. parse query to keywords list
+          var str = '<ul class=\"search-result-list\">';
+          var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+          $resultContent.innerHTML = "";
+          if (this.value.trim().length <= 0) {
+            return;
+          }
+          // 0x04. perform local searching
+          datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = data.url.replace(/^\/+/g, '');
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match articles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              str += "<li><a href=/" + data_url + " class='search-result-title'>" + orig_data_title + "</a>";
+              str += "</li>";
+            }
+          });
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No Results Found<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        });
+      },
+      error: function (xhr, status, error) {
+        $resultContent.innerHTML = ""
+        if (xhr.status === 404) {
+          $resultContent.innerHTML = "<ul><span class='local-search-empty'>Search Index File Not Found<span></ul>";
+        } else {
+          $resultContent.innerHTML = "<ul><span class='local-search-empty'>Search Service Error<span></ul>";
+        }
+      }
+    });
+    $(document).on('click', '#search-close-icon', function () {
+      $('#search-input').val('');
+      $('#search-result').html('');
+    });
+  }
+</script>
+                    <br>
+                    <input id="local-search-input" type="search" class="ins-search-input" placeholder="Search articles..." />
+                    <div id="local-search-result"></div>
+                    <div id='tags' style="display: none; text-align:justify;"><a href="tags/adr/" style="font-size: 22px;">ADR</a> <a href="tags/aws-cli/" style="font-size: 22px;">AWS CLI</a> <a href="tags/airflow/" style="font-size: 22px;">Airflow</a> <a href="tags/authentication/" style="font-size: 22px;">Authentication</a> <a href="tags/cdw-access-requests/" style="font-size: 22px;">CDW Access Requests</a> <a href="tags/cdw-remove-access/" style="font-size: 22px;">CDW Remove Access</a> <a href="tags/configs/" style="font-size: 22px;">Configs</a> <a href="tags/dags/" style="font-size: 22px;">DAGs</a> <a href="tags/devops/" style="font-size: 42px;">DevOps</a> <a href="tags/grafana/" style="font-size: 25.33px;">Grafana</a> <a href="tags/helix/" style="font-size: 42px;">Helix</a> <a href="tags/kubernetes/" style="font-size: 32px;">Kubernetes</a> <a href="tags/legacy-roles/" style="font-size: 22px;">Legacy Roles</a> <a href="tags/logging/" style="font-size: 22px;">Logging</a> <a href="tags/loki/" style="font-size: 22px;">Loki</a> <a href="tags/monitoring/" style="font-size: 28.67px;">Monitoring</a> <a href="tags/netezza/" style="font-size: 25.33px;">Netezza</a> <a href="tags/powershell/" style="font-size: 22px;">PowerShell</a> <a href="tags/powershell/" style="font-size: 32px;">Powershell</a> <a href="tags/python/" style="font-size: 22px;">Python</a> <a href="tags/rbac/" style="font-size: 22px;">RBAC</a> <a href="tags/sql/" style="font-size: 35.33px;">SQL</a> <a href="tags/snowflake/" style="font-size: 28.67px;">Snowflake</a> <a href="tags/template/" style="font-size: 22px;">Template</a> <a href="tags/tutorial/" style="font-size: 38.67px;">Tutorial</a> <a href="tags/upgrading-eks/" style="font-size: 22px;">Upgrading EKS</a> <a href="tags/windows/" style="font-size: 32px;">Windows</a> <a href="tags/yaml/" style="font-size: 22px;">YAML</a> <a href="tags/k8s/" style="font-size: 32px;">k8s</a> <a href="tags/kubectl/" style="font-size: 32px;">kubectl</a></div>
+                    <!-- placeholder for recent posts section --> 
+                    <div style="display: none;" id='categories'>
+                        
+                        
+                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            DevOps
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            AWS
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            EKS
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="eks-cluster-upgrade-comprehensive-playbook/">EKS Cluster Upgrade - Comprehensive Playbook</a></li>  </ul> 
+                                    </li> 
+                                     </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Airflow
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="identify-retry-attempts-of-a-failed-airflow-task/">Identify Retry Attempts of a Failed Airflow Task</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Alerts & Monitoring
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Grafana
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Loki
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Promtail
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="promtail-config-example/">Promtail Config Example</a></li>  </ul> 
+                                    </li> 
+                                     </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Prometheus
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="prometheus-json-exporter/">Prometheus JSON Exporter</a></li>  </ul> 
+                                    </li> 
+                                     <li class="file"><a href="snowflake-data-source-plugin-for-grafana/">Snowflake Data Source Plugin for Grafana</a></li>  </ul> 
+                                    </li> 
+                                     <li class="file"><a href="qliksense-monitoring/">QlikSense Monitoring</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Helix
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Validation Schema
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="checkers-validation-schema-row-access-policy-testing/">Checkers: Validation Schema: Row Access Policy Testing</a></li>  </ul> 
+                                    </li> 
+                                     <li class="file"><a href="tri-secret-external-staging/">Tri-Secret External Staging</a></li>  <li class="file"><a href="authenticating-snowflake-connections/">Authenticating Snowflake Connections</a></li>  <li class="file"><a href="helix-monitoring-overview/">Helix Monitoring Overview</a></li>  <li class="file"><a href="helix-sql-admin-query-examples/">Helix - SQL Admin Query Examples</a></li>  <li class="file"><a href="helix-sql-examples/">Helix SQL Examples</a></li>  <li class="file"><a href="helix-key-pair-authentication/">Helix Key Pair Authentication</a></li>  <li class="file"><a href="monitor-daily-warehouse-cost/">Monitor Daily Warehouse Cost</a></li>  <li class="file"><a href="how-to-pull-a-user-s-query-history-in-snowflake/">How to Pull a User's Query History in Snowflake</a></li>  <li class="file"><a href="snowflake-python-connector-example/">Snowflake Python Connector Example</a></li>  <li class="file"><a href="removing-legacy-netezza-roles/">Removing Legacy Netezza Roles</a></li>  <li class="file"><a href="snowflake-resource-monitors/">Snowflake Resource Monitors</a></li>  <li class="file"><a href="helix-role-validation-queries-sysadmin/">Helix Role Validation Queries - SYSADMIN</a></li>  <li class="file"><a href="helix-role-validation-queries-usageadmin/">Helix Role Validation Queries - USAGEADMIN</a></li>  <li class="file"><a href="helix-scim-alert-response/">Helix SCIM Alert Response</a></li>  <li class="file"><a href="helix-scim-integration/">Helix SCIM Integration</a></li>  <li class="file"><a href="helix-scim-syncronization-alerts/">Helix SCIM Syncronization Alerts</a></li>  <li class="file"><a href="helix-scim-token-rotation/">Helix SCIM Token Rotation</a></li>  <li class="file"><a href="helix-system-roles/">Helix System Roles</a></li>  <li class="file"><a href="helix-service-accounts/">Helix Service Accounts</a></li>  <li class="file"><a href="helix-schemas/">Helix Schemas</a></li>  <li class="file"><a href="helix-ssas-connections/">Helix SSAS Connections</a></li>  <li class="file"><a href="helix-custom-stages/">Helix Custom Stages</a></li>  <li class="file"><a href="helix-using-the-snowflake-python-connector/">Helix Using the Snowflake Python Connector</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Kubernetes
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="eks-network-debugging-techniques/">EKS Network Debugging Techniques</a></li>  <li class="file"><a href="kubectl-basics/">kubectl basics</a></li>  <li class="file"><a href="setting-up-kubectl-with-eks/">Setting up kubectl with EKS</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Netezza
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="steps-to-revoke-cdw-access-for-netezza/">Steps to Revoke CDW Access for Netezza</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Scripts
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="convert-list-of-email-addresses-to-usernames/">Convert list of email addresses to usernames</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Tools
+                                        </a>
+                                         <ul class="unstyled" id="tree" > 
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            Terraform
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="using-terraform-locally-with-snowflake/">Using Terraform Locally With Snowflake</a></li>  </ul> 
+                                    </li> 
+                                    
+                                    <li class="directory">
+                                        <a href="#" data-role="directory">
+                                            <i class="fa fa-folder"></i>
+                                            &nbsp;
+                                            aws-cli
+                                        </a>
+                                         <ul class="unstyled" id="tree" >  <li class="file"><a href="installing-the-aws-command-line-interface/">Installing the AWS Command Line Interface</a></li>  <li class="file"><a href="working-with-aws-lambda/">Working With AWS Lambda</a></li>  </ul> 
+                                    </li> 
+                                     <li class="file"><a href="how-to-install-chocolatey-on-windows/">How to install Chocolatey on Windows</a></li>  </ul> 
+                                    </li> 
+                                     <li class="file"><a href="devops-onboarding/">DevOps OnBoarding</a></li>  </ul> 
+                                    </li> 
+                                     </ul> 
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            var iconFolderOpenClass  = 'fa-folder-open';
+                            var iconFolderCloseClass = 'fa-folder';
+                            var iconAllExpandClass = 'fa-angle-double-down';
+                            var iconAllPackClass = 'fa-angle-double-up';
+                            // Handle directory-tree expansion:
+                            // Left-click to expand the directory individually
+                            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                                event.preventDefault();
+                    
+                                var icon = $(this).children('.fa');
+                                var expanded = icon.hasClass(iconFolderOpenClass);
+                                var subtree = $(this).siblings('ul');
+                                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                                if (expanded) {
+                                    if (typeof subtree != 'undefined') {
+                                        subtree.slideUp({ duration: 100 });
+                                    }
+                                    icon.addClass(iconFolderCloseClass);
+                                } else {
+                                    if (typeof subtree != 'undefined') {
+                                        subtree.slideDown({ duration: 100 });
+                                    }
+                                    icon.addClass(iconFolderOpenClass);
+                                }
+                            });
+                            // Right click to expand all subordinate directories
+                            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                                event.preventDefault();
+                                
+                                var icon = $(this).children('.fa');
+                                var expanded = icon.hasClass(iconFolderOpenClass);
+                                var listNode = $(this).siblings('ul');
+                                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                                var icons = $.merge(listNode.find('.fa'), icon);
+                                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                                if(expanded) {
+                                    subtrees.slideUp({ duration: 100 });
+                                    icons.addClass(iconFolderCloseClass);
+                                } else {
+                                    subtrees.slideDown({ duration: 100 });
+                                    icons.addClass(iconFolderOpenClass);
+                                }
+                            })
+                            // Expand the close all directories button
+                            $(document).on('click', '#allExpand', function (event) {
+                                event.preventDefault();
+                                
+                                var icon = $(this).children('.fa');
+                                var expanded = icon.hasClass(iconAllExpandClass);
+                                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                                if(expanded) {
+                                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                                    $('#categories li ul').slideDown({ duration: 100 });
+                                    icon.addClass(iconAllPackClass);
+                                } else {
+                                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                                    $('#categories li ul').slideUp({ duration: 100 });
+                                    icon.addClass(iconAllExpandClass);
+                                }
+                            });  
+                        });
+                    </script>
+                </div>
+                
+                <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+        </div>
+    </div>
+</footer>
+            </section>
+        </div>
+        <script type="text/javascript">
+
+  var search_path = "search.xml";
+
+  var path = "search.xml";
+
+  searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+<script>
+
+  var x = document.getElementById("categories");
+  var p = document.getElementById("recent");
+  var l = document.getElementById("allExpand");
+  var y = document.getElementById("tags");
+
+  function myFunction1() {
+
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      l.style.display = "block";
+      y.style.display = "none";
+      p.style.display = "none";
+    } else {
+      l.style.display = "none";
+      x.style.display = "none";
+    }
+
+  }
+
+  function myFunction2() {
+
+    if (y.style.display === "none") {
+      y.style.display = "block";
+      x.style.display = "none";
+      l.style.display = "none";
+      p.style.display = "none";
+    } else {
+      y.style.display = "none";
+    }
+  }
+
+  function myFunction3() {
+
+    window.open('https://#', '_blank');
+
+  }
+
+  function myFunction4() {
+
+    if (p.style.display === "none") {
+      p.style.display = "block";
+      x.style.display = "none";
+      y.style.display = "none";
+      l.style.display = "none";
+    } else {
+      p.style.display = "none";
+    }
+  }
+
+</script>
+    </div>
+</body>
+</html>

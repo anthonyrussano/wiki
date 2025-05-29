@@ -1,0 +1,40 @@
+name: Generate Site
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+      
+permissions: write-all
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 'latest'
+    - name: Build site
+      env:
+        NODE_OPTIONS: --max-old-space-size=5168
+      run: |
+        git config --global user.email "me@anthonyrussano.com"
+        git config --global user.name "Anthony Russano"
+        git pull
+        cd site
+        npm install
+        node_modules/hexo/bin/hexo gen -c 1
+        cd ..
+        git add .
+        git commit -m "workflow deploy"
+        git push

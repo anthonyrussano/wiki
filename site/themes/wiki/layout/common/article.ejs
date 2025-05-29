@@ -1,0 +1,60 @@
+<article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope
+    itemprop="blogPost">
+    <div class="article-inner">
+        <header class="article-header">
+            <div class="article-meta">
+                <%- partial('post/cat') %>
+            </div>
+            <% if (theme.auto_excerpt.enable) { let
+                repertory_address=`${site.data.resources.server_link}/${site.data.resources.user}/${site.data.resources.repertory}`;
+                let file_path=`${site.data.resources.branch}/site/source/${post.source}`;%>
+                <div class="article-meta-button">
+                    <a
+                        href="<%= site.data.resources.server_link %><%= site.data.resources.user %>/<%= site.data.resources.repo %><%= `/edit/main/site/source/_posts/template` %>">
+                        New </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        href='<%= site.data.resources.server_link %><%= site.data.resources.user %>/<%= site.data.resources.repo %><%= `/edit/${file_path}` %>'>
+                        Edit </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        href='<%= site.data.resources.server_link %><%= site.data.resources.user %>/<%= site.data.resources.repo %><%= `/commits/${file_path}` %>'>
+                        History </a>
+                </div>
+                <div class="article-meta-button">
+                    <a
+                        href='<%= site.data.resources.server_link %><%= site.data.resources.user %>/<%= site.data.resources.repo %><%= `/raw/${file_path}` %>'>
+                        Source </a>
+                </div>
+                <% } %>
+                    <h1 class="article-title">
+                        <span style="cursor: pointer;" onclick="myFunction3()">
+                            <%= post.title %>
+                        </span>
+                    </h1>
+                    <div style="position: relative; margin: auto;">
+                        <% if(page.image) { %>
+                            <img src="<%= site.data.resources.server_link %>raw/<%= site.data.resources.user %>/<%= site.data.resources.repo %>/main/img/<%- page.image %>"
+                                style="width: 200px; border-radius: 25px; border-width: 2px;border-style:inset;">
+                            <% } else { %>
+                                <img src="<%= site.data.resources.server_link %>raw/<%= site.data.resources.user %>/<%= site.data.resources.repo %>/main/img/<%- page.title %>"
+                                    style="width: 200px; border-radius: 25px;border-width: 2px;border-style:inset;">
+                                <% } %>
+                                    <div style="text-align:justify;">
+                                        <% if (page.tags && page.tags.length) { %>
+                                            <br><b>Keywords</b><br><br> <%- list_tags(page.tags, { show_count: false,
+                                                style: 'link' , separator: ', ' }) %>
+                                                <% } %>
+                                                    <br><br><b>Outline</b>
+                                    </div>
+                                    <%- toc(page.content) %>
+
+                    </div>
+        </header>
+        <div style="text-align:justify;" class="article-entry" itemprop="articleBody">
+            <%- post.content %>
+        </div>
+    </div>
+</article>

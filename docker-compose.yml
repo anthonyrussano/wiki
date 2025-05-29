@@ -1,0 +1,14 @@
+version: '3'
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./site/source/_posts:/site/source/_posts:delegated
+      - ./site/themes/wiki:/site/themes/wiki:delegated
+      - ./:/site/public:delegated
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 4000:4000
